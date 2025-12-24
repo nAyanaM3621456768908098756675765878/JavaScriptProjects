@@ -1,0 +1,13 @@
+# JavaScriptProjects
+
+## Social Media Page
+
+A simple social media post UI using JavaScript DOM manipulation.
+
+### Features
+- Display post author, content, image
+- Like button
+- Comments section toggle
+
+### How to run
+Open `index.html` in a browser
