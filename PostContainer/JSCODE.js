@@ -32,6 +32,17 @@ function renderPosts() {
   // Like button
   let likeBtn = document.createElement("button");
   likeBtn.textContent = "Like";
+  let isliked=false
+  // Add event listener to like button
+  likeBtn.addEventListener("click", () => {
+    if(!isliked){
+    post1.likes++;
+    footer.textContent = `Likes: ${post1.likes} Comments: ${post1.comments.length}`;
+    likeBtn.textContent = "Liked";
+    likeBtn.style.backgroundColor = "red";
+    likeBtn.disabled = true;
+  }});
+
 
   // Comment input
   let commentInput = document.createElement("input");
@@ -41,6 +52,21 @@ function renderPosts() {
   // Comment button
   let commentBtn = document.createElement("button");
   commentBtn.textContent = "Comment";
+
+  // Add event listener to comment button
+  commentBtn.addEventListener("click", () => {
+    let comment = commentInput.value;
+    if (comment.trim() !== "") {
+      post1.comments.push(comment);
+      footer.textContent = `Likes: ${post1.likes} Comments: ${post1.comments.length}`;
+      commentInput.value = "";
+      // Optionally, update comments container
+      //let p = document.createElement("p");
+      let p = document.createElement("p");
+      p.textContent = comment;
+      commentsContainer.appendChild(p);
+    }
+  });
 
   // Post footer
   let footer = document.createElement("div");
@@ -65,6 +91,7 @@ function renderPosts() {
       commentsContainer.style.display === "none" ? "block" : "none";
   });
 
+  
   // Append elements in required order
   postDiv.append(
     author,
