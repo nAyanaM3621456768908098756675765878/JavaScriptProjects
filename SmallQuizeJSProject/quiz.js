@@ -52,20 +52,23 @@ const quesJSON = [
    
     let score=0;
     let currentQuestion = 0;
+    const totalScore = quesJSON.length;
 
     //Accessing all the elements:
     const questionEl = document.getElementById("question");
     const optionEl = document.getElementById("options");
     const scoreEl = document.getElementById("score");
-
+    const nextEl = document.getElementById('next');
     showQuestion();
+    
+    nextEl.addEventListener('click', ()=>{
+      scoreEl.textContent = `Score: ${score} / ${totalScore}`;
+      nextQuestion();
+    } );
+
     function showQuestion(){
        // Destructuring the object
-     const{
-      correctAnswer, 
-      options,
-       question
-      } = quesJSON[currentQuestion];
+     const{correctAnswer, options, question} = quesJSON[currentQuestion];
 
       //Setting question text content
     questionEl.textContent = question; 
@@ -86,21 +89,25 @@ const quesJSON = [
           else{
               score=score-0.25;
           }
-      console.log(score);
-      scoreEl.textContent = `Score: ${score}`;
-      currentQuestion++;
-      optionEl.textContent = "";
-      if(currentQuestion < quesJSON.length){
-          showQuestion();
-      }
-      else{
-          questionEl.textContent = "Quiz Over!";
-          optionEl.textContent = `Final Score: ${score} / ${quesJSON.length}`;  
-          }
+          scoreEl.textContent = `Score: ${score} / ${totalScore}`;   
+       nextQuestion();
+          });
       });
-  });
+  }
 
-  
+  function nextQuestion(){
+    currentQuestion++;
+    optionEl.textContent = '';
+    if(currentQuestion>=quesJSON.length){
+      questionEl.textContent = 'Quiz Completed!!';
+      nextEl.remove();
+    } 
+    else{
+      showQuestion();
+    }
+
+  }
+
 //Shuffling the Options
 function shuffleOptions(options) {
     for (let i = options.length - 1; i >= 0; i--) {
@@ -113,4 +120,4 @@ function shuffleOptions(options) {
     return options;
   }
   
-}
+//   shuffleOptions([1, 2, 3, 4, 5]);
